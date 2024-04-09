@@ -1,0 +1,3 @@
+D:\Documents\IVE\UWB_DB\Server\bin\Release\net7.0\publish\win-x86\Server.pdb
+D:\Documents\IVE\UWB_DB\Server\bin\Release\net7.0\publish\win-x86\aspnetcorev2_inprocess.dll
+D:\Documents\IVE\UWB_DB\Server\bin\Release\net7.0\publish\win-x86\Server.exe

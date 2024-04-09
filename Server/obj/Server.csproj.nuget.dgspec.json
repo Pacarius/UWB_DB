@@ -1,0 +1,93 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/PCPG/Documents/IVE/UWB_DB/Server/Server.csproj": {}
+  },
+  "projects": {
+    "/home/PCPG/Documents/IVE/UWB_DB/Server/Server.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/PCPG/Documents/IVE/UWB_DB/Server/Server.csproj",
+        "projectName": "Server",
+        "projectPath": "/home/PCPG/Documents/IVE/UWB_DB/Server/Server.csproj",
+        "packagesPath": "/home/PCPG/.nuget/packages/",
+        "outputPath": "/home/PCPG/Documents/IVE/UWB_DB/Server/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/PCPG/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net7.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net7.0": {
+            "targetAlias": "net7.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net7.0": {
+          "targetAlias": "net7.0",
+          "dependencies": {
+            "Microsoft.AspNet.WebApi.Core": {
+              "target": "Package",
+              "version": "[5.3.0, )"
+            },
+            "Microsoft.Azure.WebPubSub.AspNetCore": {
+              "target": "Package",
+              "version": "[1.2.0, )"
+            },
+            "MySqlConnector": {
+              "target": "Package",
+              "version": "[2.3.3, )"
+            },
+            "System.Runtime.WindowsRuntime": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[7.0.17, 7.0.17]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.linux-x64",
+              "version": "[7.0.17, 7.0.17]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[7.0.17, 7.0.17]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/8.0.103/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,2 @@
+D:\Documents\IVE\UWB_DB\Server\bin\Release\net7.0\publish\linux-x64\Server.pdb
+D:\Documents\IVE\UWB_DB\Server\bin\Release\net7.0\publish\linux-x64\Server
