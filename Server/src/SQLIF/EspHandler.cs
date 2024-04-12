@@ -48,8 +48,8 @@ namespace Server.src.SQLIF
             foreach (KeyValuePair<string, List<int>> keyValuePair in VehicleOccurences)
             {
                 Console.WriteLine(keyValuePair.Key);
-                // Vector2 Position = new();
-                Vector2[] positions = Array.Empty<Vector2>();
+                Vector2 Position = new();
+                //Vector2[] positions = Array.Empty<Vector2>();
                 string VehicleID = keyValuePair.Key;
                 if (keyValuePair.Value.Count == 2)
                 {
@@ -59,8 +59,8 @@ namespace Server.src.SQLIF
                     PosStreetSet set = await MiscHelper.GetCoordinates(a);
                     Street = set.street;
                     float[] dists = tmp.Select(i => i.distance).ToArray();
-                    positions = MiscHelper.Duolaterate(set.posSet[tmp[0].LamppostID], set.posSet[tmp[1].LamppostID], dists[0], dists[1]);
-                    // Position = await MiscHelper.InBounds(Street, positions);
+                    Vector2[] positions = MiscHelper.Duolaterate(set.posSet[tmp[0].LamppostID], set.posSet[tmp[1].LamppostID], dists[0], dists[1]);
+                    Position = await MiscHelper.InBounds(Street, positions);
                 }
                 else if (keyValuePair.Value.Count > 3)
                 {
@@ -68,11 +68,17 @@ namespace Server.src.SQLIF
                     Array.Sort(tmp, (x, y) => x.distance.CompareTo(y.distance));
                     //3 closest ones should be first 3
                     tmp = tmp[..3];
+                    var a = tmp.Select(i => i.LamppostID).ToArray();
+                    foreach (var t in a) Console.WriteLine(t);
+                    PosStreetSet set = await MiscHelper.GetCoordinates(a);
+                    Street = set.street;
+                    float[] dists = tmp.Select(i => i.distance).ToArray();
+                    Position = MiscHelper.Trilaterate(set.posSet[tmp[0].LamppostID], set.posSet[tmp[1].LamppostID], set.posSet[tmp[2].LamppostID], dists[0], dists[1], dists[2]);
                     //foreach (var t in tmp) Console.WriteLine(t);
                 }
                 else return;
                 // if (!Position.Equals(new()))
-                AddEntry(positions, Street, VehicleID);
+                AddEntry(Position, Street, VehicleID);
             }
         }
         public async Task AddEntry(string X, string Y, string Street = "SampleStreet", string VehicleID = "00000000")
@@ -93,6 +99,10 @@ namespace Server.src.SQLIF
             tmp = tmp.Remove(tmp.Length - 1);
             tmp += ';';
             returnValue = await Program.sqlConnector.ExeNonQ(new($"INSERT INTO mydb.vehiclelog (VehicleInfo_VehicleID, GridX, GridY, Location) VALUES {tmp}"));
+        }
+        async Task AddEntry(Vector2 position, string Street = "SampleStreet", string VehicleID = "00000000")
+        {
+            returnValue = await Program.sqlConnector.ExeNonQ(new($"INSERT INTO mydb.vehiclelog (VehicleInfo_VehicleID, GridX, GridY, Location) VALUES ('{VehicleID}', '{position.X:N8}', '{position.Y:N8}', '{Street}')"));
         }
     }
     struct Entry

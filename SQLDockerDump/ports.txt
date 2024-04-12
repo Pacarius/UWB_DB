@@ -1,3 +1,0 @@
-6969:mysql tcp
-9696:kotlin http
-42069:dotnet server

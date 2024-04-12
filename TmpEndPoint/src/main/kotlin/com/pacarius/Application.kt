@@ -2,6 +2,7 @@ package com.pacarius
 
 import com.pacarius.models.Coordinates
 import com.pacarius.plugins.*
+import com.pacarius.routes.cordRouting
 import io.ktor.server.application.*
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
@@ -19,20 +20,5 @@ fun main() {
 fun Application.module() {
     configureSerialization()
     configureRouting()
-    lampposts()
-    vehicles()
-}
-fun Application.lampposts() {
-    routing {
-        get("/lampposts") {
-            call.respond(lampposts)
-        }
-    }
-}
-fun Application.vehicles() {
-    routing {
-        get("/vehicles") {
-            call.respond(vehicles)
-        }
-    }
+    cordRouting()
 }
