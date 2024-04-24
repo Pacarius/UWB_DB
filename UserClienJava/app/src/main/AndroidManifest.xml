@@ -13,6 +13,12 @@
         android:theme="@style/Theme.UserClienJava"
         tools:targetApi="31">
         <activity
+            android:name=".BookingPage"
+            android:exported="false" />
+        <activity
+            android:name=".Default"
+            android:exported="false" />
+        <activity
             android:name=".MapTest"
             android:exported="false" />
         <activity

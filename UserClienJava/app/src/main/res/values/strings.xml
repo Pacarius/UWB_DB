@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">UserClienJava</string>
+    <string name="live_map">Live Map</string>
+    <string name="booking">Booking</string>
+    <string name="vehicleinfo">VehicleInfo</string>
+    <string name="settings">Settings</string>
 </resources>

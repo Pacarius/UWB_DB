@@ -1,5 +1,6 @@
 package com.pacarius.userclienjava;
 
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
@@ -21,9 +22,13 @@ public class MapTestPlot extends View {
     private int[] Vecs = new int[]{53, 28};
     private int[] imgPos;
     private CoordType[][] Grid = new CoordType[Vecs[0]][Vecs[1]];
-    private List<Coordinates> vehicles = new ArrayList<>();
-    private List<Coordinates> lampposts = new ArrayList<>();
-    private ApiHandler handler = new ApiHandler(lampposts, vehicles);
+    private List<Coordinates> vehicles(){
+        return MainActivity.getVehicleArray();
+    }
+    private List<Coordinates> lampposts(){
+        return MainActivity.getLamppostArray();
+    }
+    private final ApiHandler handler = MainActivity.handler;
     Pair<Float, Float> Size = new Pair<>(pngSize[0] / (float) Vecs[0], pngSize[1] / (float) Vecs[1]);
     @Override
     protected void onDraw(Canvas canvas){
@@ -56,10 +61,10 @@ public class MapTestPlot extends View {
                     Grid[i][j] = CoordType.Empty;
                 }
             }
-            for (Coordinates coord : lampposts) {
+            for (Coordinates coord : lampposts()) {
                 Grid[coord.getX()][coord.getY()] = CoordType.Lamppost;
             }
-            for (Coordinates coord : vehicles) {
+            for (Coordinates coord : vehicles()) {
                 Grid[coord.getX()][coord.getY()] = CoordType.Vehicle;
             }
             redraw();

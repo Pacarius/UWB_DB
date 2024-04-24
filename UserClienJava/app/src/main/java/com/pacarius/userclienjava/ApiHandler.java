@@ -96,4 +96,19 @@ public class ApiHandler {
     public void setIp(String newIp) {
         this.ip = newIp;
     }
+    public void postNewBooking(String sttName, String Coordinates, String Reason){
+        new Thread(() -> {
+            try {
+                URL url = new URL("http://" + ip + ":9696/booking");
+                HttpURLConnection con = (HttpURLConnection) url.openConnection();
+                con.setRequestMethod("POST");
+                con.setDoOutput(true);
+                con.getOutputStream().write(String.format("{\"StreetName\":\"%s\", \"Coordinates\":\"%s\", \"Reason\":\"%s\"}", sttName, Coordinates, Reason).getBytes());
+                con.getInputStream();
+                con.disconnect();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }).start();
+    }
 }
