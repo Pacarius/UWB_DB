@@ -1,5 +1,11 @@
 package com.pacarius.userclienjava;
 
+import android.util.Log;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -10,7 +16,7 @@ import java.util.List;
 public class ApiHandler {
     private List<Coordinates> lampposts;
     private List<Coordinates> vehicles;
-    private String ip = "192.168.196.240";
+    private String ip = "10.0.2.2";
     private Runnable OnApiFire = () -> {};
     public ApiHandler(List<Coordinates> lampposts, List<Coordinates> vehicles) {
         this.lampposts = lampposts;
@@ -18,19 +24,27 @@ public class ApiHandler {
         getLampposts();
         getVehicles();
     }
+    private final List<Thread> threads = new ArrayList<>();
     public void getVehicles() {
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             while (true) {
                 try {
                     URL url = new URL("http://" + ip + ":9696/vehicles");
                     HttpURLConnection con = (HttpURLConnection) url.openConnection();
                     BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                    String response = reader.readLine();
-                    parseVehicles(response);
+                    String line;
+                    StringBuilder sb = new StringBuilder();
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line).append("\n");
+                    }
+                    reader.close();
+                    Log.d("ApiHandlerVehicle", sb.toString());
+                    parseVehicles(sb.toString());
                     con.disconnect();
                     OnApiFire.run();
                     Thread.sleep(1000);
                 } catch (Exception e) {
+                    e.printStackTrace();
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException interruptedException) {
@@ -38,53 +52,60 @@ public class ApiHandler {
                     }
                 }
             }
-        }).start();
+        });
+        threads.add(thread);
+        thread.start();
     }
     public void getLampposts() {
-        new Thread(() -> {
+        Thread thread = new Thread(() -> {
             try {
                 URL url = new URL("http://" + ip + ":9696/lampposts");
                 HttpURLConnection con = (HttpURLConnection) url.openConnection();
                 BufferedReader reader = new BufferedReader(new InputStreamReader(con.getInputStream()));
-                String response = reader.readLine();
-                parseLampposts(response);
+                String line;
+                StringBuilder sb = new StringBuilder();
+                while ((line = reader.readLine()) != null) {
+                    sb.append(line).append("\n");
+                }
+                reader.close();
+                Log.d("ApiHandlerVehicle", sb.toString());
+                parseVehicles(sb.toString());
+                Log.d("ApiHandlerLamppost", sb.toString());
+                parseLampposts(sb.toString());
                 con.disconnect();
             } catch (Exception e) {
+                e.printStackTrace();
                 try {
                     Thread.sleep(1000);
                 } catch (InterruptedException interruptedException) {
                     interruptedException.printStackTrace();
                 }
             }
-        }).start();
+        });
+        threads.add(thread);
+        thread.start();
     }
-    private void parseLampposts(String response) {
-        String tmp = response.replace("[", "").replace("]", "");
-        String[] items = tmp.split("\\},");
-        List<Coordinates> a = new ArrayList<>();
-        for (String item : items) {
-            String cleanedItem = item.replace("{", "").replace("}", "").replace("\n", "");
-            String[] parts = cleanedItem.split(",");
-            String type = parts[0].split(":")[1].replace("\"", "").trim();
-            int x = Math.round(Float.parseFloat(parts[1].split(":")[1].replace("\"", "")));
-            int y = Math.round(Float.parseFloat(parts[2].split(":")[1].replace("\"", "")));
-            String id = parts[3].split(":")[1].replace("\"", "");
-            a.add(new Coordinates(CoordType.valueOf(type), x, y, id));
+    private void parseLampposts(String response) throws JSONException {
+        JSONArray parsedRes = new JSONArray(response);
+        for (int i = 0; i < parsedRes.length(); i++) {
+            JSONObject obj = parsedRes.getJSONObject(i);
+            String type = obj.getString("type");
+            int x = obj.getInt("x");
+            int y = obj.getInt("y");
+            String id = obj.getString("id");
+            lampposts.add(new Coordinates(CoordType.valueOf(type), x, y, id));
         }
-        lampposts.addAll(a);
     }
 
-    private void parseVehicles(String response) {
-        String tmp = response.replace("[", "").replace("]", "");
-        String[] items = tmp.split("\\},");
+    private void parseVehicles(String response) throws JSONException {
         vehicles.clear();
-        for (String item : items) {
-            String cleanedItem = item.replace("{", "").replace("}", "").replace("\n", "");
-            String[] parts = cleanedItem.split(",");
-            String type = parts[0].split(":")[1].replace("\"", "").trim();
-            int x = Math.round(Float.parseFloat(parts[1].split(":")[1].replace("\"", "")));
-            int y = Math.round(Float.parseFloat(parts[2].split(":")[1].replace("\"", "")));
-            String id = parts[3].split(":")[1].replace("\"", "");
+        JSONArray parsedRes = new JSONArray(response);
+        for (int i = 0; i < parsedRes.length(); i++) {
+            JSONObject obj = parsedRes.getJSONObject(i);
+            String type = obj.getString("type");
+            int x = obj.getInt("x");
+            int y = obj.getInt("y");
+            String id = obj.getString("id");
             vehicles.add(new Coordinates(CoordType.valueOf(type), x, y, id));
         }
     }

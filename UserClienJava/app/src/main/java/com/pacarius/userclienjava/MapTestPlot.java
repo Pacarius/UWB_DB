@@ -13,7 +13,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class MapTestPlot extends View {
@@ -31,7 +34,7 @@ public class MapTestPlot extends View {
     private final ApiHandler handler = MainActivity.handler;
     Pair<Float, Float> Size = new Pair<>(pngSize[0] / (float) Vecs[0], pngSize[1] / (float) Vecs[1]);
     @Override
-    protected void onDraw(Canvas canvas){
+    protected void onDraw(@NonNull Canvas canvas){
         super.onDraw(canvas);
         getDimensions();
         drawAxes(canvas);
@@ -51,15 +54,11 @@ public class MapTestPlot extends View {
     }
     private void init() {
         for (int i = 0; i < Grid.length; i++) {
-            for (int j = 0; j < Grid[i].length; j++) {
-                Grid[i][j] = CoordType.Empty;
-            }
+            Arrays.fill(Grid[i], CoordType.Empty);
         }
         handler.setOnApiFire(() -> {
             for (int i = 0; i < Grid.length; i++) {
-                for (int j = 0; j < Grid[i].length; j++) {
-                    Grid[i][j] = CoordType.Empty;
-                }
+                Arrays.fill(Grid[i], CoordType.Empty);
             }
             for (Coordinates coord : lampposts()) {
                 Grid[coord.getX()][coord.getY()] = CoordType.Lamppost;

@@ -15,8 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity{
-    String[] pages = {"LiveMap", "Booking", "VehicleInfo", "Settings"};
-    Object[] imgs = {R.drawable.googlemap, R.drawable.index, R.drawable.themercedesgla, R.drawable.cog};
     private final static List<Coordinates> vehicles = new ArrayList<>();
     private final static List<Coordinates> lampposts = new ArrayList<>();
     public static List<Coordinates> getVehicleArray(){ return vehicles;}
