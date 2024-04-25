@@ -7,7 +7,32 @@
     android:layout_height="match_parent"
     tools:context=".BookingPage">
 
+    <com.pacarius.userclienjava.GifPlayer
+        android:id="@+id/yipee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tInputLayout4" />
+
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tInputLayout1"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/coordinatesField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Coordinates" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tInputLayout2"
         android:layout_width="409dp"
         android:layout_height="177dp"
         android:layout_marginStart="1dp"
@@ -18,11 +43,13 @@
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/reasonField"
             android:layout_width="match_parent"
-            android:layout_height="163dp"
+            android:layout_height="300dp"
             android:hint="Reason" />
+
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tInputLayout3"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
@@ -38,19 +65,36 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tInputLayout4"
         android:layout_width="409dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="1dp"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="170dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/coordinatesField"
+            android:id="@+id/dateField"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Coordinates" />
+            android:hint="Date" />
     </com.google.android.material.textfield.TextInputLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tInputLayout5"
+        android:layout_width="409dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="1dp"
+        android:layout_marginTop="240dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/timeField"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="timeField" />
+    </com.google.android.material.textfield.TextInputLayout>
+
 
     <Button
         android:id="@+id/bookingSubmit"
@@ -62,12 +106,13 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent" />
-    <com.pacarius.userclienjava.GifPlayer
-        android:id="@+id/yipee"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        />
+
+    <TextView
+        android:id="@+id/bookingResultText"
+        android:layout_width="412dp"
+        android:layout_height="174dp"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
