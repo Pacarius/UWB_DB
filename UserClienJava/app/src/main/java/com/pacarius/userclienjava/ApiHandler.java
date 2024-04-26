@@ -21,11 +21,12 @@ public class ApiHandler {
     public ApiHandler(List<Coordinates> lampposts, List<Coordinates> vehicles) {
         this.lampposts = lampposts;
         this.vehicles = vehicles;
-        getLampposts();
-        getVehicles();
+        lamppostThread();
+        vehicleThread();
     }
-    private final List<Thread> threads = new ArrayList<>();
-    public void getVehicles() {
+    Thread vehicleThread;
+    Thread lamppostThread;
+    public void vehicleThread() {
         Thread thread = new Thread(() -> {
             while (true) {
                 try {
@@ -45,18 +46,14 @@ public class ApiHandler {
                     Thread.sleep(1000);
                 } catch (Exception e) {
                     e.printStackTrace();
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException interruptedException) {
-                        interruptedException.printStackTrace();
-                    }
+                    break;
                 }
             }
         });
-        threads.add(thread);
+        vehicleThread = thread;
         thread.start();
     }
-    public void getLampposts() {
+    public void lamppostThread() {
         Thread thread = new Thread(() -> {
             try {
                 URL url = new URL("http://" + ip + ":9696/lampposts");
@@ -75,14 +72,9 @@ public class ApiHandler {
                 con.disconnect();
             } catch (Exception e) {
                 e.printStackTrace();
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException interruptedException) {
-                    interruptedException.printStackTrace();
-                }
             }
         });
-        threads.add(thread);
+        lamppostThread = thread;
         thread.start();
     }
     private void parseLampposts(String response) throws JSONException {
@@ -116,6 +108,8 @@ public class ApiHandler {
 
     public void setIp(String newIp) {
         this.ip = newIp;
+        if(!vehicleThread.isAlive()) vehicleThread();
+        if(!lamppostThread.isAlive()) lamppostThread();
     }
     public void postNewBooking(String sttName, String Coordinates, String Date, String Time, String Reason){
         new Thread(() -> {

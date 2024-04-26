@@ -7,8 +7,8 @@ services:
     command: --default-authentication-plugin=mysql_native_password
     volumes:
       - data:/var/lib/mysql
-    ports:
-      - "6969:6969"
+    # ports:
+      # - "6969:6969"
     hostname: db
   api:
     image: pacificguardian/api

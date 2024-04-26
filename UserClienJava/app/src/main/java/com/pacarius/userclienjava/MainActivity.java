@@ -1,6 +1,7 @@
 package com.pacarius.userclienjava;
 
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.widget.GridView;
 import android.widget.SimpleAdapter;
@@ -20,6 +21,7 @@ public class MainActivity extends AppCompatActivity{
     public static List<Coordinates> getVehicleArray(){ return vehicles;}
     public static List<Coordinates> getLamppostArray(){ return lampposts;}
     public final static ApiHandler handler = new ApiHandler(vehicles, lampposts);
+    MediaPlayer mediaPlayer;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,17 +32,12 @@ public class MainActivity extends AppCompatActivity{
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        mediaPlayer = MediaPlayer.create(this, R.raw.bubbledragon);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.start();
         findViewById(R.id.liveMapButton).setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MapTest.class)));
         findViewById(R.id.vehicleInfoButton).setOnClickListener(view -> startActivity(new Intent(MainActivity.this, Default.class)));
         findViewById(R.id.settingsButton).setOnClickListener(view -> startActivity(new Intent(MainActivity.this, Default.class)));
         findViewById(R.id.bookingButton).setOnClickListener(view -> startActivity(new Intent(MainActivity.this, BookingPage.class)));
-//        startActivity(new Intent(this, MapTest.class));
-//        GridView mgv = findViewById(R.id.mainGridView);
-//        mgv.setAdapter(
-//                new SimpleAdapter(
-//
-//                )
-//        );
-//                .setOnClickListener(view -> startActivity(new Intent(MainActivity.this, MapTest.class)));
     }
 }
