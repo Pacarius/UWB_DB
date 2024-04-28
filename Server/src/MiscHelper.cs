@@ -16,7 +16,7 @@ namespace Server.src
             float distBetweenPoints = Vector2.Distance(pos1, pos2);
             float a = (dist1 * dist1 - dist2 * dist2 + distBetweenPoints * distBetweenPoints) / (2 * distBetweenPoints);
             Console.WriteLine($"{pos1} : {dist1} ; {pos2} : {dist2}");
-            //add doesnt fucking intersect check
+            //add doesnt intersect check
             float tmp = dist1 * dist1 - a * a;
             if (tmp < 0) {
                 Console.WriteLine("Radii do not intersect.");

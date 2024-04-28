@@ -28,7 +28,7 @@ namespace Server
                         if(tmp > 0 && tmp < Modes.Length)
                         {
                             Stage = -tmp;
-                            //This is fucking stupid.
+                            //This is stupid.
                             await w.WriteLineAsync("Mode Selected.");
                         }
                         else
