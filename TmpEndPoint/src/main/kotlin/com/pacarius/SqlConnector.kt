@@ -33,7 +33,7 @@ class SqlConnector(private val lampposts: MutableList<Coordinates>, private val 
     }
 
     private fun CoroutineScope.launchSqlConnector() = launch {
-        val conn: Connection? = withContext(Dispatchers.IO) { DriverManager.getConnection("jdbc:mysql://db:6969/mydb?permitMysqlScheme&user=root&password=vtccenter") }
+        val conn: Connection? = withContext(Dispatchers.IO) { DriverManager.getConnection("jdbc:mysql://db:6969/mydb?permitMysqlScheme&user=root&password=vtccenter&allowPublicKeyRetrieval=true") }
         val st: Statement? = conn?.createStatement()
         val rs: ResultSet = st!!.executeQuery("Select * from mydb.lamppostinfo")
         while (rs.next()) {

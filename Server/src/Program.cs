@@ -16,9 +16,13 @@ namespace Server
         static List<List<Client>> clientLists = new() { 
             Servers[0].clients,
         };
+        public static bool BoundsCheck { get; private set; } = true;
         static void Main(string[] args)
         {
-            if (args.Length > 0 && args[0].ToLower() == "--sql") sqlConnector = new SqlConnector();
+            foreach(string arg in args){
+                if(arg.ToLower() == "--sql") sqlConnector = new SqlConnector(SqlMode: true);
+                if(arg.ToLower() == "--nbc") BoundsCheck = false;
+            } 
             // Console.WriteLine(args[0].ToLower() == "--sql");
             //EspHandler handler = new("[anchor_1;26444;28.26],[anchor_2;26444;10],[anchor_1;2333;36.94],[anchor_2;2333;11]");
             //var tmp = new Vector2[10];

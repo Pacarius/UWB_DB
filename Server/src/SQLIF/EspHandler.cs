@@ -60,7 +60,8 @@ namespace Server.src.SQLIF
                     Street = set.street;
                     float[] dists = tmp.Select(i => i.distance).ToArray();
                     Vector2[] positions = MiscHelper.Duolaterate(set.posSet[tmp[0].LamppostID], set.posSet[tmp[1].LamppostID], dists[0], dists[1]);
-                    Position = await MiscHelper.InBounds(Street, positions);
+                    if(!Program.BoundsCheck) Position = await MiscHelper.InBounds(Street, positions);
+                    else{AddEntry(positions, Street, VehicleID); continue};
                 }
                 else if (keyValuePair.Value.Count > 3)
                 {

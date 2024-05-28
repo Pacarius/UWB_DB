@@ -1,7 +1,7 @@
 version: '0.1'
 services:
   db:
-    image: pacificguardian/db
+    image: db
     environment:
       MYSQL_TCP_PORT: 6969
     command: --default-authentication-plugin=mysql_native_password
@@ -17,7 +17,7 @@ services:
     depends_on:
       - db
   server:
-   image: pacificguardian/server
+   image: pacificguardian/server:NoBoundsCheck
    command: --sql
    ports:
      - "42069:42069"
