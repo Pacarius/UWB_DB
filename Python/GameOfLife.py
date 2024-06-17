@@ -2,12 +2,12 @@ import time
 import pygame 
 COLOR = (255, 255, 255) 
 X, Y = 53, 28
-Scale = 10
+Scale = 20
 W, H = X * Scale * 2, Y * Scale * 2
-lamppost = pygame.image.load('lamppost.png')
-car = pygame.image.load('car.png')
-lamppost = pygame.transform.scale(lamppost, (100, 100))
-car = pygame.transform.scale(car, (40, 40))
+lamppost = pygame.image.load('C:\\Users\\pcpg\\Desktop\\Android9\\UWB_DB\\Python\\lamppost.png')
+car = pygame.image.load('C:\\Users\\pcpg\\Desktop\\Android9\\UWB_DB\\Python\\car.png')
+lamppost = pygame.transform.scale(lamppost, (60  * Scale / 10, 60  * Scale / 10))
+car = pygame.transform.scale(car, (60  * Scale / 10, 60  * Scale / 10))
 LamppostList = [(17, 11), (46, 17)]
 v = (10, 10)
 Directions = [()]

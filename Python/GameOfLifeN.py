@@ -1,17 +1,18 @@
 import time
 import pygame 
 COLOR = (255, 255, 255) 
-X, Y = 53, 28
-Scale = 10
+X, Y = 14, 10 # 53, 28
+Scale = 20
 W, H = X * Scale * 2, Y * Scale * 2
-lamppost = pygame.image.load('lamppost.png')
-car = pygame.image.load('car.png')
-lamppost = pygame.transform.scale(lamppost, (100, 100))
-car = pygame.transform.scale(car, (40, 40))
-LamppostList = [(17, 11), (46, 17)]
-v = (10, 10)
+lamppost = pygame.image.load('C:\\Users\\pcpg\\Desktop\\Android9\\UWB_DB\\Python\\lamppost.png')
+car = pygame.image.load('C:\\Users\\pcpg\\Desktop\\Android9\\UWB_DB\\Python\\car.png')
+lamppost = pygame.transform.scale(lamppost, (60  * Scale / 10, 60  * Scale / 10))
+car = pygame.transform.scale(car, (60  * Scale / 10, 60  * Scale / 10))
+LamppostList = [(2, 5), (10, 5)]
+v = (10, 2)
 #Direction, Steps, StepSize || StepSize takes LCM with Steps since implementation is temporary
-Directions = [('r', 20, 4), ('i', 2, None), ('u', 6, 1), ('r', 9, 2)]
+Directions = [('i', 2
+               , None), ('l', 4, 2), ('i', 1, None), ('l', 4, 2)]
 Moving = True
 Dir, Steps, Index, StepSize = 0, 0, -1, None
 TickTime = 1
@@ -26,10 +27,10 @@ while True:
             pygame.quit()
             quit()
     for l in LamppostList:
-        sq = pygame.Surface((20, 20))
+        sq = pygame.Surface((20  * Scale / 10, 20  * Scale / 10))
         sq.fill((0, 0, 255))
         screen.blit(sq, (l[0] * Scale * 2, (Y - l[1]) * Scale * 2))
-        screen.blit(lamppost, (l[0] * Scale * 2 - 22, (Y - l[1]) * Scale * 2 - 85))
+        screen.blit(lamppost, ((l[0] - 0.5)* Scale * 2 , (Y - l[1] - 2.4) * Scale * 2))
     if Moving:
         if(Steps <= 0):
             Index += 1
@@ -39,26 +40,28 @@ while True:
             Dir = Directions[Index][0]
             Steps = Directions[Index][1]
             StepSize = Directions[Index][2]
-        else:
-            if StepSize == None:
-                StepSize = 1
-            for i in range(StepSize):
-                Steps -= 1
-                if Dir == 'r':
-                    v = (v[0] + 1, v[1])
-                elif Dir == 'l':
-                    v = (v[0] - 1, v[1])
-                elif Dir == 'u':
-                    v = (v[0], v[1] + 1)
-                elif Dir == 'd':
-                    v = (v[0], v[1] - 1)
-                elif Dir == 'i':
-                    pass
-    sq = pygame.Surface((20, 20))
+        if StepSize == None:
+            StepSize = 1
+        for i in range(StepSize):
+            Steps -= 1
+            if Dir == 'r':
+                v = (v[0] + 1, v[1])
+            elif Dir == 'l':
+                v = (v[0] - 1, v[1])
+            elif Dir == 'u':
+                v = (v[0], v[1] + 1)
+            elif Dir == 'd':
+                v = (v[0], v[1] - 1)
+            elif Dir == 'i':
+                pass
+    sq = pygame.Surface((20  * Scale / 10, 20  * Scale / 10))
     sq.fill((255, 0, 0))
     screen.blit(sq, (v[0] * Scale * 2, (Y - v[1]) * Scale * 2))
-    screen.blit(car, (v[0] * Scale * 2 - 10, (Y - v[1]) * Scale * 2 - 10))
-    pygame.display.flip()
-    # pygame.display.update()
+    # if Dir == 'l': 
+    tmpcar = pygame.transform.flip(car, True, False)
+    # else: tmpcar = car
+    screen.blit(tmpcar, ((v[0] - 1)* Scale * 2, (Y - v[1] - 1) * Scale * 2 ))
+    # pygame.display.flip()
+    pygame.display.update()
     # print(screen.get_size())
-    time.sleep(TickTime)
+    pygame.time.wait(TickTime * 1000)
